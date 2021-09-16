@@ -6,6 +6,7 @@ import pythonBasics1
 # the simple provided test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
 
+
 def test(got, expected):
     if got == expected:
         prefix = ' OK '
@@ -17,8 +18,8 @@ def test(got, expected):
 def main():
     # set which functions to test
     check_odd_range = True
-    check_has_lower_case = False
-    check_fizz_buzz = False
+    check_has_lower_case = True
+    check_fizz_buzz = True
 
     if check_odd_range:
         print('Testing odd_range:')
