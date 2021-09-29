@@ -19,6 +19,14 @@ class TestPythonBasicsOne(unittest.TestCase):
 
         # Please add three more test cases following the order above
 
+        self.assertEqual(pythonBasics3.starts_with_non_number("this line starts with t"), True)
+
+        self.assertEqual(pythonBasics3.starts_with_non_number("output is valid"), True)
+
+        self.assertEqual(pythonBasics3.starts_with_non_number("100 sheep"), False)
+
+        print((pythonBasics3.starts_with_non_number("# is used to comment a line in Python")))
+
 #Test case for multiple_words
     def test_multiple_words(self):
 
