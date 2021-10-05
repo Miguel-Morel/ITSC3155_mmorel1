@@ -11,30 +11,63 @@
 # to n (including n).
 
 def count_threes(n):
-  return int(n/3)
 
+  n = list(str(n))
+
+  diction = {}
+
+  diction[3] = diction[6] = diction[9] = 0
+
+  for i in n:
+      j = int(i)
+      if j % 3 == 0 and j != 0:
+          diction[j] = diction[j] + 1
+
+  max = -1
+  indx = -1
+
+  for k, v in diction.items():
+      if v > max:
+          max = v
+          indx = k
+
+  return indx
 
 # Part B. longest_consecutive_repeating_char
 # Define a function longest_consecutive_repeating_char(s) that takes
 # a string s and returns the character that has the longest consecutive repeat.
 def longest_consecutive_repeating_char(s):
-  n = len(s)
-  ctr = 1
-  mx = 1
-  ch = s[0]
-  for i in range(0, n - 1):
-    if s[i] == s[i + 1]:
-      ctr += 1
 
-    else:
-      if ctr > mx:
-        mx = ctr
-        ch = s[i]
-      ctr = 1
-  if ctr > mx:
-    mx = ctr
-    ch = s[i]
-  return ch
+
+  s = list(s)
+  l = len(s)
+  count = 1
+
+  diction = {}
+
+  for i in range(0, l - 1):
+      if (s[i] != s[i + 1]):
+          if ((s[i] in diction) and diction[s[i]] > count):
+              continue
+          else:
+              diction[s[i]] = count
+              count = 1
+      else:
+          count += 1
+
+  diction[s[l - 1]] = count
+
+  max = -1
+  for key, value in diction.items():
+      if value > max:
+          max = value
+
+  lst = []
+  for key, value in diction.items():
+      if value == max:
+          lst.append(key)
+
+  return lst
 
 
 
