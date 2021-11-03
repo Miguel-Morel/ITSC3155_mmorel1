@@ -2,13 +2,14 @@
 
 # imports
 import os
-from database import db                 # os is used to get environment variables IP & PORT
+                 # os is used to get environment variables IP & PORT
 from flask import Flask
 from flask import request
 from flask import render_template
-from flask.helpers import url_for
+# from flask.helpers import url_for
 from flask import redirect, url_for
-from werkzeug.utils import redirect # Flask is the web app that we will customize
+# from werkzeug.utils import redirect # Flask is the web app that we will customize
+from database import db
 from models import Note as Note
 from models import User as User
 
