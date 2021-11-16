@@ -39,7 +39,7 @@ def index():
     # a_user = {'name': 'Miguel', 'email': 'mmorel@uncc.edu'}
 
     #get user from database
-    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
 
     return render_template('index.html', user = a_user)
 
@@ -48,7 +48,7 @@ def get_notes():
     # a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
 
     #retrieve user from database
-    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
 
     #retrieve notes from database
     my_notes = db.session.query(Note).all()
@@ -61,7 +61,7 @@ def get_note(note_id):
     # a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
 
     #retrieve user from database
-    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
 
     #retrieve note from database
     my_note = db.session.query(Note).filter_by(id=note_id)
@@ -95,7 +95,7 @@ def new_note():
     else:
         #GET request - show new note form
         #retrieve user from database
-        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu')
+        a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
         return render_template('new.html', user=a_user)
 
 
