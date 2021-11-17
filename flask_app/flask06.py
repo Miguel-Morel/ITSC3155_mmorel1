@@ -13,14 +13,21 @@ from database import db
 from models import Note as Note
 from models import User as User
 from forms import RegisterForm
-from flask import bcrypt
+# from flask import bcrypt
+# from flask import Bcrypt
 from flask import session
+# from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)     # create an app
+
+# bcrypt = Bcrypt(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flask_note_app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 
 app.config['SECRET_KEY'] = 'SE3155'
+
+app.debug = True
 
 #  Bind SQLAlchemy db object to this Flask app
 db.init_app(app)

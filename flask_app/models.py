@@ -1,5 +1,6 @@
 from database import db
-from flask import datetime
+# from flask import datetime
+import datetime
 
 class Note(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
