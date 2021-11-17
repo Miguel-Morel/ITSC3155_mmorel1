@@ -18,6 +18,8 @@ from forms import RegisterForm
 # from flask.ext.bcrypt import Bcrypt
 from flask import session
 import bcrypt
+from models import Comment as Comment
+from forms import RegisterForm, LoginForm, NoteForm, CommentForm
 
 from forms import LoginForm
 
@@ -84,13 +86,25 @@ def get_notes():
 def get_note(note_id):
     # a_user = {'name': 'Mogli', 'email': 'mogli@uncc.edu'}
     
-    #retrieve user from database
-    a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
+    # #retrieve user from database
+    # a_user = db.session.query(User).filter_by(email='mogli@uncc.edu').one()
 
-    #retrieve note from database
-    my_note = db.session.query(Note).filter_by(id=note_id)
+    # #retrieve note from database
+    # my_note = db.session.query(Note).filter_by(id=note_id)
 
-    return render_template('note.html', note = my_note, user = a_user)
+    # return render_template('note.html', note = my_note, user = a_user)
+
+     #check if user is saved in session
+    if session.get('user'):
+        #retrieve notes from database
+        my_note = db.session.query(Note).filter_by(id=note_id, user_id=session['user_id']).all()
+
+        #create a comment form object
+        form = CommentForm()
+
+        return render_template('note.html', note = my_note, user = session['user'], form=form)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/notes/edit/<note_id>', methods=['GET', 'POST'])
@@ -233,6 +247,23 @@ def logout():
         session.clear()
     
     return redirect(url_for('index'))
+
+@app.route('/notes/<note_id>/comment', methods=['POST'])
+def new_comment(note_id):
+    if session.get('user'):
+        comment_form = CommentForm()
+        # validate_on_submit only validates using POST
+        if comment_form.validate_on_submit():
+            # get comment data
+            comment_text = request.form['comment']
+            new_record = Comment(comment_text, int(note_id), session['user_id'])
+            db.session.add(new_record)
+            db.session.commit()
+
+        return redirect(url_for('get_note', note_id=note_id))
+
+    else:
+        return redirect(url_for('login'))
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
